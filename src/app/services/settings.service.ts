@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {Observable} from 'rxjs';
 
 export class Settings {
-    id: number;
     fanOnUrl: string = '';
     fanOffUrl: string = '';
     fanStatusUrl: string = '';
     lampOnUrl: string = '';
     lampOffUrl: string = '';
     lampStatusUrl: string = '';
-    termometrUrl: string = '';
-    lastMode: number = 0;
+    termometerUrl: string = '';
 
     public constructor(initor?: Partial<Settings>) {
         if (initor) {
@@ -22,16 +23,15 @@ export class Settings {
     providedIn: 'root'
 })
 export class SettingsService {
-    constructor() {
+    apiUrl = `${environment.apiUrl}/settings`;
+    constructor(private http: HttpClient) {
     }
 
-    snakeToCamel(str) {
-        return str.replace(
-            /([-_][a-z])/g,
-            (group) => group.toUpperCase()
-                .replace('-', '')
-                .replace('_', '')
-        );
+    getSettings() {
+        return this.http.get(this.apiUrl);
     }
 
+    saveSettings(settings: Settings): Observable<Settings> {
+        return this.http.post<Settings>(this.apiUrl, settings);
+    }
 }

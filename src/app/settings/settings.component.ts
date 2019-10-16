@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Settings, SettingsService} from '../services/settings.service';
+import {finalize} from 'rxjs/operators';
 
 class SettingsData extends Settings {
 }
@@ -18,7 +19,7 @@ export class SettingsComponent implements OnInit {
     model = new SettingsData();
 
     constructor(
-        settingsSrv: SettingsService
+        private  settingsSrv: SettingsService
     ) {
     }
 
@@ -38,16 +39,26 @@ export class SettingsComponent implements OnInit {
         this.actionError = '';
         this.actionSuccess = false;
 
-        console.log('vDBG', form); // vTODO: Debug info, please remove
-
-        setTimeout(() => { // vTODO:  implement on service
-            this.submitted = false;
-            this.loading = false;
-            this.actionSuccess = true;
-            setTimeout(() => {
-                this.actionSuccess = false;
-            }, 5000);
-        }, 2000);
+        this.settingsSrv.saveSettings(this.model as Settings)
+            .pipe(
+                finalize(() => {
+                    this.submitted = false;
+                    this.loading = false;
+                })
+            )
+            .subscribe(
+                value => {
+                    console.log('vDBG V', value); // vTODO: Debug info, please remove
+                    this.actionSuccess = true;
+                    setTimeout(() => {
+                        this.actionSuccess = false;
+                    }, 2000);
+                },
+                error => {
+                    console.log('vDBG E', error); // vTODO: Debug info, please remove
+                    this.actionError = error.statusText;
+                }
+            );
     }
 
     reset() {
@@ -62,9 +73,10 @@ export class SettingsComponent implements OnInit {
 
     loadSettings(): Promise<Settings> { // vTODO:  Implement on service
         return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(new SettingsData());
-            }, 3000);
+            this.settingsSrv.getSettings().subscribe(
+                (data: SettingsData) => resolve(data)
+            );
+
         });
     }
 
