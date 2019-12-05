@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {Injector, NgModule} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -19,6 +19,12 @@ import {FormsModule} from '@angular/forms';
 import { LoaderBlockComponent } from './loader-block/loader-block.component';
 import { ConfirmationDialogComponent } from './components/shared/confirmation-dialog/confirmation-dialog.component';
 import { ScheduledTaskComponent } from './scheduled-task/scheduled-task.component';
+import { ReferenciesComponent } from './referencies/referencies.component';
+import { PeriodsComponent } from './periods/periods.component';
+import { EditPeriodComponent } from './periods/edit-period/edit-period.component';
+import { ShuttersComponent } from './shutters/shutters.component';
+import { EditShuttersComponent } from './shutters/edit-shutters/edit-shutters.component';
+import {InjectorService} from './services/injector.service';
 
 @NgModule({
     declarations: [
@@ -30,7 +36,12 @@ import { ScheduledTaskComponent } from './scheduled-task/scheduled-task.componen
         TemperatureProfilesComponent,
         LoaderBlockComponent,
         ConfirmationDialogComponent,
-        ScheduledTaskComponent
+        ScheduledTaskComponent,
+        ReferenciesComponent,
+        PeriodsComponent,
+        EditPeriodComponent,
+        ShuttersComponent,
+        EditShuttersComponent,
     ],
     imports: [
         BrowserModule,
@@ -48,4 +59,8 @@ import { ScheduledTaskComponent } from './scheduled-task/scheduled-task.componen
     bootstrap: [AppComponent]
 })
 export class AppModule {
+    constructor(injector: Injector) {
+        new InjectorService(injector);
+    }
+
 }

@@ -1,0 +1,155 @@
+<app-loader-block *ngIf="loading"></app-loader-block>
+<div class="container pl-sm-1 pr-sm-1">
+  <div class="row justify-content-center">
+
+    <div class="col-md-6 col-sm-12">
+      <div class="card text-white bg-danger mb-3" *ngIf="actionError">
+        <div class="card-body">
+          <p class="card-text small">{{actionError}}</p>
+
+        </div>
+      </div>
+      <div class="card text-white bg-danger mb-3" *ngIf="actionErrors.length">
+        <div class="card-body">
+          <p class="card-text small" *ngFor="let err of actionErrors">{{err}}</p>
+        </div>
+      </div>
+      <div class="card text-white bg-success mb-3" *ngIf="actionSuccess">
+        <div class="card-body">
+          <p class="card-text small">Data saved successfully</p>
+        </div>
+      </div>
+
+      <form #addEditForm="ngForm" (ngSubmit)="onSubmit(addEditForm)">
+
+        <fieldset [disabled]="loading">
+
+          <div class="form-group">
+            <label for="name">Name of shutter</label>
+            <input type="text"
+                   class="form-control"
+                   id="name"
+                   name="name"
+                   placeholder="Name"
+                   required
+                   aria-invalid="true"
+                   [(ngModel)]="model.name"
+                   #name="ngModel"
+                   [ngClass]="{'is-invalid': addEditForm.submitted && name.invalid}"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="alias">Short alias</label>
+            <input type="text"
+                   class="form-control"
+                   id="alias"
+                   name="alias"
+                   placeholder="Alias"
+                   required
+                   maxlength="4"
+                   aria-invalid="true"
+                   [(ngModel)]="model.alias"
+                   #alias="ngModel"
+                   [ngClass]="{'is-invalid': addEditForm.submitted && alias.invalid}"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="direction">Air direction</label>
+            <select class="custom-select form-control" name="direction" id="direction" [(ngModel)]="model.direction" [ngModelOptions]="{standalone: true}">
+              <option value="IN">IN</option>
+              <option value="OUT">OUT</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="urlTemplate">Control URL</label>
+            <input type="text"
+                   class="form-control"
+                   id="urlTemplate"
+                   name="urlTemplate"
+                   urlTemplate="urlTemplate"
+                   placeholder="Lamp starts before fan in min"
+                   required
+                   aria-invalid="true"
+                   [(ngModel)]="model.urlTemplate"
+                   #urlTemplate="ngModel"
+                   [ngClass]="{'is-invalid': addEditForm.submitted && urlTemplate.invalid}"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="openAngle">Open angle</label>
+            <input type="number"
+                   class="form-control"
+                   id="openAngle"
+                   name="openAngle"
+                   placeholder="Open angle"
+                   required
+                   min="0"
+                   max="90"
+                   aria-invalid="true"
+                   [(ngModel)]="model.openAngle"
+                   #openAngle="ngModel"
+                   [ngClass]="{'is-invalid': addEditForm.submitted && openAngle.invalid}"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="closeAngle">Close angle</label>
+            <input type="number"
+                   class="form-control"
+                   id="closeAngle"
+                   name="closeAngle"
+                   placeholder="Close angle"
+                   required
+                   min="0"
+                   max="90"
+                   aria-invalid="true"
+                   [(ngModel)]="model.closeAngle"
+                   #closeAngle="ngModel"
+                   [ngClass]="{'is-invalid': addEditForm.submitted && closeAngle.invalid}"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="initValue">Default value %</label>
+            <input type="number"
+                   class="form-control"
+                   id="initValue"
+                   name="initValue"
+                   placeholder="Default value %"
+                   required
+                   min="0"
+                   max="100"
+                   aria-invalid="true"
+                   [(ngModel)]="model.initValue"
+                   #initValue="ngModel"
+                   [ngClass]="{'is-invalid': addEditForm.submitted && initValue.invalid}"
+            >
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" >
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"  *ngIf="submitted"></span>
+            <span *ngIf="!itemId">Create</span>
+            <span *ngIf="itemId">Save</span>
+          </button>
+
+          <button type="button" class="mt-5 btn btn-danger btn-block"
+                  (click)="reset()"
+                  [disabled]="reseting"
+          >
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"  *ngIf="reseting"></span>
+            Reset <i class="fas fa-trash"></i>
+          </button>
+
+          <button type="button" class="mt-5 btn btn-warning btn-block"
+                  (click)="cancel()"
+          >
+            Cancel <i class="fas fa-close"></i>
+          </button>
+        </fieldset>
+      </form>
+    </div>
+  </div>

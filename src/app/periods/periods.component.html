@@ -1,0 +1,24 @@
+<div *ngIf="!isEditItem">
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">From, h</th>
+            <th scope="col">To, h</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of list ">
+            <td><a href="javascript:" (click)="editItem(item.id)">{{item.name}}</a></td>
+            <td><a href="javascript:" (click)="editItem(item.id)">{{item.fromH}}</a></td>
+            <td><a href="javascript:" (click)="editItem(item.id)">{{item.toH}}</a></td>
+            <td>
+                <button (click)="deleteItem(item.id)" class="btn"><i class="fas fa-trash text-danger"></i></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <button (click)="addItem()" class="btn btn-primary btn-sm"><i class="fas fa-plus mr-1"></i>Add</button>
+</div>
+<app-edit-period *ngIf="isEditItem" [itemId]="itemInEditId" (updated)="editFinished($event)"></app-edit-period>

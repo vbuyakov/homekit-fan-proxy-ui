@@ -14,6 +14,6 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.router.navigateByUrl('/scheduled-task');
+    this.router.navigateByUrl('/referencies');
   }
 }
