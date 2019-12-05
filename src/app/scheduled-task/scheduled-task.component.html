@@ -1,0 +1,205 @@
+<app-loader-block *ngIf="loading"></app-loader-block>
+<div class="container pl-sm-1 pr-sm-1">
+  <h3 *ngIf="taskId" class="text-center">Edit schedule task</h3>
+  <h3 *ngIf="!taskId" class="text-center">Create schedule task</h3>
+  <div class="row justify-content-center">
+
+    <div class="col-md-6 col-sm-12">
+      <div class="card text-white bg-danger mb-3" *ngIf="actionError">
+        <div class="card-body">
+          <p class="card-text small">{{actionError}}</p>
+        </div>
+      </div>
+      <div class="card text-white bg-success mb-3" *ngIf="actionSuccess">
+        <div class="card-body">
+          <p class="card-text small">Data saved successfully</p>
+        </div>
+      </div>
+
+      <form #scheduleTaskForm="ngForm" (ngSubmit)="onSubmit(scheduleTaskForm)">
+        <fieldset [disabled]="loading">
+          <div class="form-group">
+            <label for="fromH">Start hour of period</label>
+            <input type="number"
+                   class="form-control"
+                   id="fromH"
+                   name="fromH"
+                   placeholder="Start hour of period"
+                   required
+                   min="0"
+                   max="23"
+                   aria-invalid="true"
+                   [(ngModel)]="model.fromH"
+                   #fromH="ngModel"
+                   [ngClass]="{'is-invalid': scheduleTaskForm.submitted && fromH.invalid}"
+            >
+          </div>
+
+            <div class="form-group">
+              <label for="toH">End hour of period</label>
+              <input type="number"
+                     class="form-control"
+                     id="toH"
+                     name="toH"
+                     placeholder="End hour of period"
+                     required
+                     min="0"
+                     max="23"
+                     aria-invalid="true"
+                     [(ngModel)]="model.toH"
+                     #toH="ngModel"
+                     [ngClass]="{'is-invalid': scheduleTaskForm.submitted && toH.invalid}"
+              >
+            </div>
+
+              <div class="form-group">
+                <label for="startPeriod">Start fan every, minutes</label>
+                <input type="number"
+                       class="form-control"
+                       id="startPeriod"
+                       name="startPeriod"
+                       placeholder="Start fan every, minutes"
+                       required
+                       min="0"
+                       max="59"
+                       aria-invalid="true"
+                       [(ngModel)]="model.startPeriod"
+                       #startPeriod="ngModel"
+                       [ngClass]="{'is-invalid': scheduleTaskForm.submitted && startPeriod.invalid}"
+                >
+              </div>
+
+                <div class="form-group">
+                  <label for="workingPeriod">Fan will work minutes</label>
+                  <input type="number"
+                         class="form-control"
+                         id="workingPeriod"
+                         name="workingPeriod"
+                         placeholder="Fan will work minutes"
+                         required
+                         min="0"
+                         max="59"
+                         aria-invalid="true"
+                         [(ngModel)]="model.workingPeriod"
+                         #workingPeriod="ngModel"
+                         [ngClass]="{'is-invalid': scheduleTaskForm.submitted && workingPeriod.invalid}"
+                  >
+                </div>
+
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input"
+                             type="checkbox"
+                             name="useLamp"
+                             value="1"
+                             id="useLamp"
+                             #useLamp="ngModel"
+                             [(ngModel)]="model.useLamp">
+                      <label class="form-check-label" for="useLamp">
+                        Use UV lamp
+                      </label>
+                    </div>
+                  </div>
+
+                    <div class="form-group">
+                      <label for="lampCorelation">Lamp starts before fan in min</label>
+                      <input type="number"
+                             class="form-control"
+                             id="lampCorelation"
+                             name="lampCorelation"
+                             placeholder="Lamp starts before fan in min"
+                             required
+                             aria-invalid="true"
+                             [(ngModel)]="model.lampCorelation"
+                             #lampCorelation="ngModel"
+                             [ngClass]="{'is-invalid': scheduleTaskForm.submitted && lampCorelation.invalid}"
+                      >
+                    </div>
+
+                      <div class="form-group">
+                        <label for="shutterN1">Shutter angle for input</label>
+                        <input type="number"
+                               class="form-control"
+                               id="shutterN1"
+                               name="shutterN1"
+                               placeholder="Shutter angle for input"
+                               required
+                               min="0"
+                               max="90"
+                               aria-invalid="true"
+                               [(ngModel)]="model.shutterN1"
+                               #shutterN1="ngModel"
+                               [ngClass]="{'is-invalid': scheduleTaskForm.submitted && shutterN1.invalid}"
+                        >
+                      </div>
+
+                        <div class="form-group">
+                          <label for="shutterN2">Shutter angle for bedroom</label>
+                          <input type="number"
+                                 class="form-control"
+                                 id="shutterN2"
+                                 name="shutterN2"
+                                 placeholder="Shutter angle for bedroom"
+                                 required
+                                 min="0"
+                                 max="90"
+                                 aria-invalid="true"
+                                 [(ngModel)]="model.shutterN2"
+                                 #shutterN2="ngModel"
+                                 [ngClass]="{'is-invalid': scheduleTaskForm.submitted && shutterN2.invalid}"
+                          >
+                        </div>
+
+                          <div class="form-group">
+                            <label for="shutterN3">Shutter angle for cabinet</label>
+                            <input type="number"
+                                   class="form-control"
+                                   id="shutterN3"
+                                   name="shutterN3"
+                                   placeholder="Shutter angle for cabinet"
+                                   required
+                                   min="0"
+                                   max="90"
+                                   aria-invalid="true"
+                                   [(ngModel)]="model.shutterN3"
+                                   #shutterN3="ngModel"
+                                   [ngClass]="{'is-invalid': scheduleTaskForm.submitted && shutterN3.invalid}"
+                            >
+                          </div>
+
+                            <div class="form-group">
+
+                              <label for="tempMode">Temperature correction mode</label>
+
+
+                              <select class="custom-select form-control" id="tempMode" [(ngModel)]="model.tempMode" [ngModelOptions]="{standalone: true}">
+                                <option value="0">No correction</option>
+                                <option value="1">Mode One</option>
+                                <option value="2">Mode Two</option>
+                                <option value="3">Mode Three</option>
+                                <option value="4">Four Three</option>
+                              </select>
+                            </div>
+
+
+
+
+
+          <button type="submit" class="btn btn-primary btn-block" >
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"  *ngIf="submitted"></span>
+            <span *ngIf="!taskId">Create task</span>
+            <span *ngIf="taskId">Save task</span>
+          </button>
+
+          <button type="button" class="mt-5 btn btn-danger btn-block"
+                  (click)="reset()"
+                  [disabled]="reseting"
+          >
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"  *ngIf="reseting"></span>
+            Reset settins <i class="fas fa-trash"></i>
+          </button>
+
+        </fieldset>
+      </form>
+  </div>
+</div>

@@ -5,10 +5,13 @@ import {TemperatureProfilesComponent} from './temperature-profiles/temperature-p
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {SettingsComponent} from './settings/settings.component';
 import {ScheduleComponent} from './schedule/schedule.component';
+import {ScheduledTaskComponent} from './scheduled-task/scheduled-task.component';
+
 
 const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'schedule', component: ScheduleComponent},
+  {path: 'scheduled-task', component: ScheduledTaskComponent},
   {path: 'temp-profiles', component: TemperatureProfilesComponent},
   {path: 'settings', component: SettingsComponent},
 ];

@@ -1,3 +1,44 @@
-<p>
-  schedule works!
-</p>
+<h3>Scheduled tasks ({{schedules?.length}})</h3>
+
+<a title="add task" [routerLink]="['/scheduled-task']">Add new task</a>
+<table *ngIf="schedules?.length" class="table table-bordered">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col" rowspan="2">Start Hour</th>
+        <th scope="col" rowspan="2">End Hour</th>
+        <th scope="col" colspan="2" class="text-center d-none d-sm-table-cell">Fan running</th>
+        <th scope="col" colspan="3" class="text-center d-none d-md-table-cell">Shutters</th>
+        <th scope="col" colspan="2" class="text-center d-none d-lg-table-cell">UV Lamp</th>
+        <th scope="col" rowspan="2" class="d-none d-lg-table-cell">Termometer mode</th>
+        <th scope="col" rowspan="2"></th>
+    </tr>
+    <tr>
+        <th scope="col" class="d-none d-sm-table-cell">Period, <small>min</small></th>
+        <th scope="col" class="d-none d-sm-table-cell">How long, <small>min</small></th>
+        <th scope="col" class="d-none d-md-table-cell">General</th>
+        <th scope="col" class="d-none d-md-table-cell">Bedrom</th>
+        <th scope="col" class="d-none d-md-table-cell">Cabinet</th>
+        <th scope="col" class="d-none d-lg-table-cell">Enabled</th>
+        <th scope="col" class="d-none d-lg-table-cell">Delay, <small>min</small></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let schedule of schedules;">
+        <td>{{schedule.fromH}}</td>
+        <td>{{schedule.toH}}</td>
+        <td class="d-none d-sm-table-cell">{{schedule.startPeriod}}</td>
+        <td class="d-none d-sm-table-cell">{{schedule.workingPeriod}}</td>
+        <td class="d-none d-md-table-cell">{{schedule.shutterN1}}</td>
+        <td class="d-none d-md-table-cell">{{schedule.shutterN2}}</td>
+        <td class="d-none d-md-table-cell">{{schedule.shutterN3}}</td>
+        <td class="d-none d-lg-table-cell">{{schedule.useLamp}}</td>
+        <td class="d-none d-lg-table-cell">{{schedule.lampCorelation}}</td>
+        <td class="d-none d-lg-table-cell">{{schedule.tempMode}}</td>
+        <td >
+            <a [routerLink]="['/scheduled-task']" [queryParams]="{taskId: schedule.rowid}" class="btn"><i class="fas fa-edit text-success"></i></a>
+            <button (click)="deleteItem(schedule.rowid)" class="btn"><i class="fas fa-trash text-danger"></i></button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a title="add task" [routerLink]="['/scheduled-task']">Add new task</a>
